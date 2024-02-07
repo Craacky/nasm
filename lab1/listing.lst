@@ -1,0 +1,21 @@
+     1                                  section .data
+     2                                  
+     3 00000000 48656C6C6F20437261-     	msg db 'Hello Craacky!', 0xa, 0xd
+     3 00000009 61636B79210A0D     
+     4                                  	len equ $ - msg
+     5                                  
+     6                                  section .text
+     7                                  	global _start
+     8                                  
+     9                                  _start:
+    10 00000000 B804000000              	mov eax, 4	;sys-write
+    11 00000005 BB01000000              	mov ebx, 1 	;file descryptor stdout
+    12 0000000A B9[00000000]            	mov ecx, msg	;our string
+    13 0000000F BA10000000              	mov edx, len	;len of the string
+    14                                  
+    15 00000014 CD80                    	int 0x80
+    16                                  
+    17 00000016 B801000000              	mov eax, 1 	;sys-exit
+    18 0000001B BB00000000              	mov ebx, 0	;err-code
+    19                                  
+    20 00000020 CD80                    	int 0x80

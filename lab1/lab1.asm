@@ -1,6 +1,6 @@
 section .data
 
-	msg db 'Hello Yakutin!', 0xa, 0xd
+	msg db 'Hello Craacky!', 0xa, 0xd
 	len equ $ - msg
 
 section .text
