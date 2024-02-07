@@ -1,0 +1,58 @@
+     1                                  section .data
+     2 00000000 486173207468652061-         msg1_I: db 'Has the afternoon passed ?', 10
+     2 00000009 667465726E6F6F6E20-
+     2 00000012 706173736564203F0A 
+     3                                      msg1_O: equ $-msg1_I
+     4                                      
+     5 0000001B 476F6F64206D6F726E-         msg2_I: db 'Good mornig', 10
+     5 00000024 69670A             
+     6                                      msg2_O: equ $-msg2_I
+     7                                  
+     8 00000027 476F6F642061667472-         msg3_I: db 'Good aftrenoon',10
+     8 00000030 656E6F6F6E0A       
+     9                                      msg3_O: equ $-msg3_I
+    10                                  
+    11                                  
+    12                                  section .bss
+    13 00000000 <res 50h>                   buffer: RESB 80
+    14 00000050 ????????                    buffer_length: RESD 1
+    15                                  
+    16                                  section .text
+    17                                      global _start
+    18                                  
+    19                                  _start:
+    20                                      ; Print the input message
+    21 00000000 B804000000                  mov eax, 4
+    22 00000005 BB01000000                  mov ebx, 1
+    23 0000000A B9[00000000]                mov ecx, msg1_I
+    24 0000000F BA1B000000                  mov edx, msg1_O
+    25 00000014 CD80                        int 0x80
+    26                                  
+    27                                      ; Read the input string
+    28 00000016 B803000000                  mov eax, 3
+    29 0000001B BB00000000                  mov ebx, 0
+    30 00000020 B9[00000000]                mov ecx, buffer
+    31 00000025 BA[50000000]                mov edx, buffer_length
+    32 0000002A CD80                        int 0x80
+    33                                  
+    34                                  
+    35                                  
+    36 0000002C B804000000                  mov eax, 4
+    37 00000031 BB01000000                  mov ebx,1
+    38                                  begin_if:
+    39 00000036 803D[00000000]4E            cmp BYTE[buffer], 'N' 
+    40 0000003D 750C                        jne end_if
+    41 0000003F B9[1B000000]                mov ecx, msg2_I
+    42 00000044 BA0C000000                  mov edx, msg2_O
+    43 00000049 CD80                        int 0x80
+    44                                  
+    45                                  end_if:
+    46 0000004B B9[27000000]                mov ecx, msg3_I
+    47 00000050 BA0F000000                  mov edx, msg3_O
+    48 00000055 CD80                        int 0x80
+    49                                  
+    50                                      ; Exit the program
+    51 00000057 B801000000                  mov eax, 1
+    52 0000005C 31DB                        xor ebx, ebx
+    53 0000005E CD80                        int 0x80
+    54                                  
