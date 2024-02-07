@@ -4,4 +4,4 @@ build:
 	ld -m elf_i386 -s -o app lab3.o
 	./app
 clean:
-	rm -r app lab3.o
+	rm -r app lab3.o listing.lst
