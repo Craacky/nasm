@@ -6,6 +6,6 @@ build:
 
 	dd if=/dev/zero of=flash.bin bs=4096 count=4096
 	dd if=add.bin of=flash.bin bs=4096 conv=notrunc
-	qemu-system-arm -M connex -pflash flash.bin -nographic -serial /dev/null
+	qemu-system-arm -M connex -pflash flash.bin -nographic -serial /dev/null	
 clean:
 	rm -r add.bin add.elf add.o flash.bin
