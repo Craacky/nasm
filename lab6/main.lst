@@ -1,0 +1,102 @@
+ARM GAS  main.s 			page 1
+
+
+   1              	
+   2              	.text
+   3 0000 0E0000EA 	b start
+   4              	
+   5 0004 48617320 	msg_hello:	.asciz	"Has the afternoon passed?\n"
+   5      74686520 
+   5      61667465 
+   5      726E6F6F 
+   5      6E207061 
+   6 001f 00       				.align
+   7              	
+   8 0020 476F6F64 	msg_yes:	.asciz "Good morning!"
+   8      206D6F72 
+   8      6E696E67 
+   8      2100
+   9 002e 0000     				.align
+  10              	
+  11 0030 476F6F64 	msg_no:		.asciz "Good afternoon!"
+  11      20616674 
+  11      65726E6F 
+  11      6F6E2100 
+  12              				.align
+  13              	
+  14              	
+  15              	start:
+  16 0040 58009FE5 		ldr r0, =0x40100000
+  17 0044 58209FE5 		ldr r2, =msg_hello
+  18              	
+  19              	//input from keyboard
+  20              	input:
+  21 0048 0130D2E4 		ldrb r3, [r2], #1
+  22 004c 000053E3 	 	cmp r3, #0
+  23 0050 0030C0E5 		strb r3, [r0]
+  24 0054 FBFFFF1A 		bne input
+  25              	
+  26              	// check if our input == Y && N
+  27              	check_symbol:
+  28 0058 0010D0E5 		ldrb r1, [r0]
+  29 005c 0120A0E1 		mov r2, r1
+  30 0060 590052E3 		cmp r2, #89
+  31 0064 0300000A 		beq picked_day
+  32              		
+  33 0068 0120A0E1 		mov r2, r1
+  34 006c 4E0052E3 		cmp r2, #78
+  35 0070 0200000A 		beq picked_morning
+  36              	
+  37 0074 F7FFFFEA 		b check_symbol
+  38              	
+  39              	//result when input = 'N'
+  40              	picked_day:
+  41 0078 28209FE5 		ldr r2, =msg_no
+  42 007c 0100000A 		beq result_loop
+  43              	
+  44              	//result when input = 'Y'
+  45              	picked_morning:
+  46 0080 24209FE5 		ldr r2, =msg_yes
+  47 0084 FFFFFF0A 		beq result_loop
+ARM GAS  main.s 			page 2
+
+
+  48              	
+  49              	//output picked dar or morning
+  50              	result_loop:
+  51 0088 0130D2E4 		ldrb r3, [r2], #1
+  52 008c 000053E3 	 	cmp r3, #0
+  53 0090 0030C0E5 		strb r3, [r0]
+  54 0094 FBFFFF1A 		bne result_loop
+  55 0098 FFFFFFEA 		b stop
+  56              	
+  57 009c FEFFFFEA 	stop: b stop
+  58              	
+  59 00a0 00001040 	
+  59      04000000 
+  59      30000000 
+  59      20000000 
+ARM GAS  main.s 			page 3
+
+
+DEFINED SYMBOLS
+              main.s:15     .text:00000040 start
+              main.s:3      .text:00000000 $a
+              main.s:5      .text:00000004 msg_hello
+              main.s:5      .text:00000004 $d
+              main.s:8      .text:00000020 msg_yes
+              main.s:8      .text:00000020 $d
+              main.s:11     .text:00000030 msg_no
+              main.s:11     .text:00000030 $d
+              main.s:12     .text:00000040 $a
+              main.s:20     .text:00000048 input
+              main.s:27     .text:00000058 check_symbol
+              main.s:40     .text:00000078 picked_day
+              main.s:45     .text:00000080 picked_morning
+              main.s:50     .text:00000088 result_loop
+              main.s:57     .text:0000009c stop
+              main.s:59     .text:000000a0 $d
+              main.s:6      .text:0000001f $d
+              main.s:9      .text:0000002e $d
+
+NO UNDEFINED SYMBOLS

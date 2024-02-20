@@ -3,54 +3,57 @@
 b start
 
 msg_hello:	.asciz	"Has the afternoon passed?\n"
-			.equ nul, 0
 			.align
+
 msg_yes:	.asciz "Good morning!"
-			.equ nul, 0
 			.align
-msg_no:		.asciz "Good afternoon"
-			.equ nul, 0
+
+msg_no:		.asciz "Good afternoon!"
 			.align
+
 
 start:
 	ldr r0, =0x40100000
 	ldr r2, =msg_hello
-loop:
-	ldrb r3, [r2], #1
- 	cmp r3, #nul
-	strb r3, [r0]
-	bne loop
 
-is_symbol:
+//input from keyboard
+input:
+	ldrb r3, [r2], #1
+ 	cmp r3, #0
+	strb r3, [r0]
+	bne input
+
+// check if our input == Y && N
+check_symbol:
 	ldrb r1, [r0]
 	mov r2, r1
 	cmp r2, #89
-	beq print_day
+	beq picked_day
 	
 	mov r2, r1
 	cmp r2, #78
-	beq print_morning
-	
-	b is_symbol
-	
-print_day:
+	beq picked_morning
+
+	b check_symbol
+
+//result when input = 'N'
+picked_day:
 	ldr r2, =msg_no
-	
-loop2:
-	ldrb r3, [r2], #1
- 	cmp r3, #nul
-	strb r3, [r0]
-	bne loop2
-	b stop
-print_morning:
+	beq result_loop
+
+//result when input = 'Y'
+picked_morning:
 	ldr r2, =msg_yes
-	
-loop3:
+	beq result_loop
+
+//output picked dar or morning
+result_loop:
 	ldrb r3, [r2], #1
- 	cmp r3, #nul
+ 	cmp r3, #0
 	strb r3, [r0]
-	bne loop3
+	bne result_loop
 	b stop
+
 stop: b stop
 
 
