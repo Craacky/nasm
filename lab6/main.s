@@ -46,7 +46,7 @@ picked_morning:
 	ldr r2, =msg_yes
 	beq result_loop
 
-//output picked dar or morning
+//output picked day or morning
 result_loop:
 	ldrb r3, [r2], #1
  	cmp r3, #0
