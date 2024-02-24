@@ -7,4 +7,4 @@ build:
 	qemu-system-arm -M connex -pflash flash.bin -nographic -serial /dev/pts/1
 	
 clean:
-	rm -f main.o main.elf main.bin flash.bin
+	rm -f main.o main.elf main.bin flash.bin main.lst

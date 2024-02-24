@@ -2,13 +2,13 @@
 .text
 b start
 
-msg_hello:	.asciz	"Has the afternoon passed?\n"
+msg_hello:	.ascii	"\nHas the afternoon passed?\n"
 			.align
 
-msg_yes:	.asciz "Good morning!"
+msg_yes:	.ascii "Good morning!"
 			.align
 
-msg_no:		.asciz "Good afternoon!"
+msg_no:		.ascii "Good afternoon!"
 			.align
 
 
@@ -30,7 +30,6 @@ check_symbol:
 	cmp r2, #89
 	beq picked_day
 	
-	mov r2, r1
 	cmp r2, #78
 	beq picked_morning
 
