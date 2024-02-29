@@ -2,7 +2,7 @@ build:
 	arm-none-eabi-as -o main.o main.s
 	arm-none-eabi-as -o sum-sub.o sum-sub.s
 	arm-none-eabi-ld -Ttext=0x0 -o main.elf  main.o sum-sub.o
-	arm-none-eabi-nm main.elf
+	arm-none-eabi-nm sum-sub.o
 	arm-none-eabi-objcopy -O binary main.elf main.bin
 
 	dd if=/dev/zero of=flash.bin bs=4096 count=4096
